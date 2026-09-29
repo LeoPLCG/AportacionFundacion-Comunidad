@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aportación Fundación–Comunidad</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap">
+<style>
+/* Layout: columna de captura + panel de resultados fijo (1 columna en celular). Identidad LCG. */
+:root{--bg:#f2edea;--card:#ffffff;--ink:#1d1d1b;--mut:#5f6360;--line:#dcd5d0;--acc:#006054;--acc2:#00b780;--on-acc:#ffffff;--ok:#00805a;--warn:#a85a00;--bad:#b3261e;--pend:#fbf1d9;--field:#faf8f6;
+--f-display:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif;--f-body:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121513;--card:#1b201d;--ink:#f2edea;--mut:#a3aaa6;--line:#2e3632;--acc:#00b780;--acc2:#00b780;--on-acc:#0d1a15;--ok:#3fd39c;--warn:#f0a44b;--bad:#ff8a80;--pend:#3a3220;--field:#141816;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#121513;--card:#1b201d;--ink:#f2edea;--mut:#a3aaa6;--line:#2e3632;--acc:#00b780;--acc2:#00b780;--on-acc:#0d1a15;--ok:#3fd39c;--warn:#f0a44b;--bad:#ff8a80;--pend:#3a3220;--field:#141816;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 var(--f-body)}
+main{max-width:1000px;margin:0 auto;padding:20px 16px 60px}
+.brand{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-bottom:14px;margin-bottom:18px;border-bottom:1px solid var(--line)}
+.logo{height:18px;width:auto;color:var(--acc);max-width:70%}
+.brand span{font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--mut);font-weight:600;text-align:right}
+h1{font-family:var(--f-display);font-weight:800;font-size:1.6rem;letter-spacing:-.01em;margin:0 0 6px;text-wrap:balance;color:var(--acc)}
+.sub{color:var(--mut);margin:0 0 20px;max-width:65ch}
+.grid{display:grid;grid-template-columns:minmax(0,1fr);gap:16px}
+.grid>*{min-width:0}
+@media(min-width:860px){.grid{grid-template-columns:1.1fr .9fr}.sticky{position:sticky;top:calc(env(safe-area-inset-top,0px) + 12px);align-self:start}}
+details{background:var(--card);border:1px solid var(--line);border-radius:10px;margin-bottom:10px}
+summary{cursor:pointer;padding:13px 14px;font-weight:700;list-style:none;display:flex;justify-content:space-between;gap:8px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";color:var(--acc2);font-weight:800}details[open] summary::after{content:"–"}
+summary:focus-visible,input:focus-visible,button:focus-visible{outline:2px solid var(--acc2);outline-offset:2px}
+.body{padding:0 14px 12px}
+.f{display:grid;grid-template-columns:minmax(0,1fr) 150px;gap:10px;align-items:center;padding:8px 0;border-top:1px dashed var(--line)}
+.f:first-child{border-top:0}
+@media(max-width:420px){.f{grid-template-columns:minmax(0,1fr) 124px}}
+.f label{font-size:.92rem;font-weight:500}.f small{display:block;color:var(--mut);font-size:.78rem;font-weight:400}
+input{width:100%;padding:9px 8px;border:1px solid var(--line);border-radius:8px;background:var(--field);color:var(--ink);font:inherit;font-size:16px;text-align:right;font-variant-numeric:tabular-nums}
+input.pend{background:var(--pend)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px;margin-bottom:12px}
+.card:first-child{border-top:3px solid var(--acc2)}
+.card h2{font-size:.78rem;letter-spacing:.07em;text-transform:uppercase;margin:0 0 12px;color:var(--mut);display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.row{display:flex;justify-content:space-between;gap:12px;padding:4px 0;font-variant-numeric:tabular-nums}
+.row b{text-align:right}
+.row.tot{border-top:1px solid var(--line);margin-top:4px;padding-top:8px;font-weight:700}
+.big{font-family:var(--f-display);font-size:2rem;font-weight:800;color:var(--acc);font-variant-numeric:tabular-nums;line-height:1.2;margin-bottom:6px}
+.pill{display:inline-block;padding:3px 10px;border-radius:99px;font-size:.72rem;font-weight:700;letter-spacing:.04em;border:1px solid currentColor}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}
+.alert{border-left:4px solid var(--bad);padding:8px 10px;background:var(--pend);border-radius:6px;margin-top:8px;font-size:.9rem}
+.card table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;font-size:.86rem}
+th,td{padding:7px 4px;text-align:right;border-bottom:1px solid var(--line)}th:first-child,td:first-child{text-align:left}
+th{font-size:.72rem;letter-spacing:.05em;text-transform:uppercase;color:var(--mut);font-weight:700}
+ul.pend{margin:0;padding-left:18px;font-size:.88rem;color:var(--mut)}
+button{background:var(--acc);color:var(--on-acc);border:0;border-radius:8px;padding:12px 14px;font:inherit;font-weight:700;cursor:pointer;width:100%}
+button:hover{filter:brightness(1.08)}
+.note{font-size:.8rem;color:var(--mut);margin-top:8px}
+.brand-r{display:flex;align-items:center;gap:12px;flex-wrap:wrap;justify-content:flex-end}
+.tbtn{width:auto;padding:7px 12px;font-size:.8rem;background:transparent;color:var(--acc);border:1px solid var(--line);border-radius:99px}
+.card table{min-width:360px}.tw{overflow-x:auto}
+.refs{margin-top:28px;padding-top:20px;border-top:1px solid var(--line)}
+.refs h2{font-size:.78rem;letter-spacing:.07em;text-transform:uppercase;color:var(--mut);margin:0 0 14px}
+.refs h3{font-size:1rem;margin:0 0 8px;color:var(--acc)}
+.refs-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:20px}
+@media(min-width:760px){.refs-grid{grid-template-columns:1fr 1fr}}
+.refs ul{margin:0;padding-left:18px;display:grid;gap:8px;font-size:.9rem;max-width:65ch}
+.refs b{color:var(--ink)}
+.gloss{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--acc2);border-radius:8px;padding:10px 12px;margin:0 0 12px;font-size:.9rem;max-width:65ch}
+.rng{display:flex;align-items:center;gap:8px}
+.rng input[type=range]{flex:1;min-width:0;padding:0;border:0;background:transparent;accent-color:var(--acc)}
+.rng output{font-weight:700;color:var(--acc);min-width:3.2em;text-align:right;font-variant-numeric:tabular-nums}
+</style>
+</head>
+<body>
+
+<main>
+<header class="brand"><svg class="logo" role="img" aria-label="London Consulting Group" fill="currentColor" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 1911.32 229.94"> <path d="M1811.19,168.91c5.5,0,10,4.51,10,10s-4.51,10-10,10-10-4.51-10-10,4.51-10,10-10ZM1811.19,186.66c4.27,0,7.75-3.48,7.75-7.75s-3.48-7.75-7.75-7.75-7.75,3.48-7.75,7.75,3.48,7.75,7.75,7.75ZM1807.16,183.93v-10.32h4.23c2.85,0,3.84,1.7,3.84,3.12,0,1.62-.83,2.61-2.21,3.08l2.73,4.11h-2.33l-2.53-3.84h-1.66v3.84h-2.06ZM1810.96,178.36c1.54,0,2.21-.47,2.21-1.58,0-.95-.71-1.38-2.02-1.38h-1.94v2.96h1.74Z"/> <g> <path d="M1270.17,108.98c0-60.19-48.44-108.98-108.19-108.98s-108.19,48.79-108.19,108.98,48.44,109,108.19,109,108.19-48.79,108.19-109Z"/> <path d="M463.75,108.98c0-60.19-48.44-108.98-108.19-108.98s-108.19,48.79-108.19,108.98,48.44,109,108.19,109,108.19-48.79,108.19-109Z"/> <path d="M828.53,217.98c59.75,0,108.19-48.79,108.19-109S888.28,0,828.53,0"/> <path d="M217.96,217.98H9.8C4.39,217.98,0,213.59,0,208.18V0"/> <path d="M493.3,0h208.16c5.41,0,9.8,4.39,9.8,9.8v208.18"/> <path d="M1299.47,0h208.16c5.41,0,9.8,4.39,9.8,9.8v208.18"/> <g> <path d="M1641.8,46.76h21.01v4.97h-26.5V7.79h5.48v38.98Z"/> <path d="M1691.86,37.85c0,8.28-4.08,14.39-13.25,14.39-8.47,0-13.25-5.6-13.25-14.39v-4.21c0-9.04,4.9-14.27,13.25-14.27s13.25,5.16,13.25,14.27v4.21ZM1686.77,37.85v-4.21c0-6.05-2.93-9.68-8.15-9.68s-8.15,3.69-8.15,9.68v4.21c0,5.48,2.29,9.81,8.15,9.81,5.41,0,8.15-4.39,8.15-9.81Z"/> <path d="M1698.54,19.89h5.1v3.12c1.59-2.42,3.82-3.63,8.54-3.63,6.81,0,11.59,3.57,11.59,12.48v19.87h-5.1v-19.81c0-6.43-3.5-7.83-7.26-7.83-4.77,0-7.77,3.38-7.77,7.77v19.87h-5.1v-31.84Z"/> <path d="M1751.85,7.79h5.1v43.95h-5.1v-2.8c-1.72,2.23-4.46,3.31-8.66,3.31-8.66,0-12.74-6.11-12.74-14.39v-4.21c0-9.11,4.84-14.27,12.74-14.27,4.2,0,6.94,1.34,8.66,3.7V7.79ZM1751.85,38.29v-4.65c0-5.99-2.93-9.68-8.15-9.68s-8.15,3.63-8.15,9.68v4.21c0,5.41,2.74,9.81,8.15,9.81s8.15-4.08,8.15-9.36Z"/> <path d="M1790.13,37.85c0,8.28-4.08,14.39-13.25,14.39-8.47,0-13.25-5.6-13.25-14.39v-4.21c0-9.04,4.9-14.27,13.25-14.27s13.25,5.16,13.25,14.27v4.21ZM1785.03,37.85v-4.21c0-6.05-2.93-9.68-8.15-9.68s-8.15,3.69-8.15,9.68v4.21c0,5.48,2.29,9.81,8.15,9.81,5.41,0,8.15-4.39,8.15-9.81Z"/> <path d="M1796.81,19.89h5.1v3.12c1.59-2.42,3.82-3.63,8.54-3.63,6.81,0,11.59,3.57,11.59,12.48v19.87h-5.1v-19.81c0-6.43-3.5-7.83-7.26-7.83-4.77,0-7.77,3.38-7.77,7.77v19.87h-5.1v-31.84Z"/> <path d="M1660.46,104.54c-1.53-6.88-5.03-9.23-10.44-9.23-6.75,0-10.44,4.2-10.44,15.09v4.84c0,10.89,3.69,15.1,10.44,15.1,5.73,0,8.98-2.8,10.44-9.24h5.29c-1.4,9.87-7.39,14.2-15.73,14.2-9.75,0-15.92-5.86-15.92-20.06v-4.84c0-14.2,6.18-20.06,15.92-20.06,8.66,0,14.39,4.59,15.79,14.2h-5.35Z"/> <path d="M1696.76,120.9c0,8.28-4.08,14.39-13.25,14.39-8.47,0-13.25-5.61-13.25-14.39v-4.2c0-9.04,4.9-14.27,13.25-14.27s13.25,5.16,13.25,14.27v4.2ZM1691.67,120.9v-4.2c0-6.05-2.93-9.68-8.15-9.68s-8.15,3.7-8.15,9.68v4.2c0,5.48,2.29,9.81,8.15,9.81,5.41,0,8.15-4.4,8.15-9.81Z"/> <path d="M1703.45,102.94h5.1v3.12c1.59-2.42,3.82-3.63,8.54-3.63,6.81,0,11.59,3.56,11.59,12.48v19.87h-5.1v-19.81c0-6.43-3.5-7.83-7.26-7.83-4.77,0-7.77,3.38-7.77,7.77v19.87h-5.1v-31.85Z"/> <path d="M1754.85,110.4c-1.72-2.23-3.5-3.25-7.9-3.25-3.76,0-6.18,1.46-6.18,4.27,0,3.63,3.18,4.71,7.39,5.03,5.99.44,11.46,2.16,11.46,9.49,0,5.54-3.76,9.36-11.97,9.36-6.5,0-9.87-1.97-12.3-5.29l3.76-2.67c1.72,2.29,4.01,3.25,8.6,3.25,4.27,0,6.81-1.66,6.81-4.52,0-3.44-2.04-4.65-8.21-5.1-5.35-.38-10.64-2.55-10.64-9.49,0-5.29,3.82-9.04,11.4-9.04,5.16,0,9.1,1.34,11.59,5.28l-3.82,2.68Z"/> <path d="M1791.85,134.79h-5.1v-3.12c-1.59,2.42-3.82,3.63-8.54,3.63-6.81,0-11.59-3.57-11.59-12.48v-19.87h5.1v19.81c0,6.43,3.5,7.83,7.26,7.83,4.77,0,7.77-3.37,7.77-7.77v-19.87h5.1v31.85Z"/> <path d="M1800.12,90.84h5.1v32.86c0,3.44.19,6.37,5.42,6.37v4.72c-8.03,0-10.51-3.19-10.51-9.81v-34.14Z"/> <path d="M1814.77,102.94h4.08v-7h5.1v7h7.32v4.59h-7.32v16.18c0,4.4.51,6.24,4.77,6.24h2.55v4.84h-2.74c-7.52,0-9.68-3.19-9.68-9.81v-17.45h-4.08v-4.59Z"/> <path d="M1838.27,90.84h5.73v5.73h-5.73v-5.73ZM1838.59,102.94h5.1v31.85h-5.1v-31.85Z"/> <path d="M1852.92,102.94h5.1v3.12c1.59-2.42,3.82-3.63,8.54-3.63,6.82,0,11.59,3.56,11.59,12.48v19.87h-5.1v-19.81c0-6.43-3.5-7.83-7.26-7.83-4.77,0-7.77,3.38-7.77,7.77v19.87h-5.1v-31.85Z"/> <path d="M1906.22,102.94h5.1v31.21c0,8.86-5.1,13.12-13.63,13.12-5.54,0-8.92-1.47-11.15-5.35l3.95-2.8c1.34,2.36,3.44,3.56,7.58,3.56,5.54,0,8.15-3.06,8.15-8.54v-2.16c-1.72,2.23-4.45,3.31-8.66,3.31-8.66,0-12.74-6.11-12.74-14.39v-4.2c0-9.11,4.84-14.27,12.74-14.27,4.21,0,6.94,1.34,8.66,3.69v-3.19ZM1906.22,120.9v-4.2c0-5.99-2.93-9.68-8.15-9.68s-8.15,3.63-8.15,9.68v4.2c0,5.41,2.74,9.81,8.15,9.81,5.86,0,8.15-4.33,8.15-9.81Z"/> <path d="M1666.19,195.74v2.55c0,14.2-6.43,20.07-16.18,20.07s-15.92-5.86-15.92-20.07v-4.84c0-14.2,6.18-20.06,15.92-20.06,8.54,0,14.39,4.52,15.79,14.2h-5.35c-1.4-6.56-4.84-9.23-10.44-9.23-6.75,0-10.44,4.2-10.44,15.09v4.84c0,10.89,3.69,15.1,10.44,15.1,6.18,0,10.06-3.57,10.64-12.68h-10.44v-4.97h15.98Z"/> <path d="M1690.77,192.88c-1.33-1.85-2.99-2.67-5.35-2.67-3.88,0-6.81,2.93-6.81,7.7v19.94h-5.1v-31.85h5.1v3.12c1.33-2.23,3.5-3.63,7.39-3.63,4.33,0,7.07,1.46,9.11,4.33l-4.33,3.06Z"/> <path d="M1723.51,203.96c0,8.28-4.08,14.39-13.25,14.39-8.47,0-13.25-5.61-13.25-14.39v-4.21c0-9.05,4.9-14.27,13.25-14.27s13.25,5.16,13.25,14.27v4.21ZM1718.42,203.96v-4.21c0-6.05-2.93-9.68-8.15-9.68s-8.15,3.7-8.15,9.68v4.21c0,5.47,2.29,9.81,8.15,9.81,5.41,0,8.15-4.4,8.15-9.81Z"/> <path d="M1755.42,217.85h-5.1v-3.12c-1.59,2.42-3.82,3.63-8.54,3.63-6.82,0-11.59-3.57-11.59-12.48v-19.87h5.1v19.81c0,6.43,3.5,7.83,7.26,7.83,4.77,0,7.77-3.37,7.77-7.77v-19.87h5.1v31.85Z"/> <path d="M1777.46,185.49c7.89,0,12.74,5.16,12.74,14.27v4.21c0,8.28-4.08,14.39-12.74,14.39-4.21,0-6.95-1.34-8.66-3.69v15.29h-5.1v-43.95h5.1v3.19c1.72-2.36,4.46-3.69,8.66-3.69ZM1785.1,203.96v-4.21c0-6.05-2.93-9.68-8.15-9.68s-8.15,3.51-8.15,9.24v4.65c0,5.47,2.29,9.81,8.15,9.81,5.42,0,8.15-4.4,8.15-9.81Z"/> </g> <path d="M828.53,217.98c59.75,0,108.19-48.79,108.19-109S888.28,0,828.53,0"/> </g> </svg><div class="brand-r"><span>Fundación · Comunidad Sefardí</span><button type="button" id="theme" class="tbtn" aria-label="Cambiar modo claro u oscuro">Modo oscuro</button></div></header>
+<h1>Aportación Fundación → Comunidad</h1>
+<p class="sub">Primero se cubre la necesidad de la fundación. Del excedente sale un % sobre la recaudación de fiestas mayores. Los campos en amarillo están pendientes.</p>
+<div class="grid">
+<div id="inputs"></div>
+<div class="sticky" id="out"></div>
+</div>
+<section class="refs" aria-labelledby="refs-t">
+<h2 id="refs-t">Referencias y justificación</h2>
+<div class="refs-grid">
+<div>
+<h3>Buenas prácticas (orientativas, no normativas)</h3>
+<p class="gloss"><b>¿Qué es una OSC?</b> Organización de la Sociedad Civil: una organización privada sin fines de lucro, como una A.C., una I.A.P. o una fundación, que trabaja por un fin social. Esta fundación es una OSC.</p>
+<ul>
+<li><b>Fiscal sponsorship y federaciones:</b> cobran 5–15% de lo recaudado por uso de infraestructura y administración.</li>
+<li><b>Maaser (tzedaká):</b> 10% como referencia cultural de la “porción justa”.</li>
+<li><b>Reserva operativa en OSC (Organizaciones de la Sociedad Civil):</b> 3–6 meses de gasto.</li>
+<li><b>Gasto administrativo sano en OSC (Organizaciones de la Sociedad Civil):</b> menos de 20–25% del total.</li>
+<li><b>SAT, donatarias autorizadas:</b> gasto administrativo ≤5% de los donativos. Validar con el contador si la aportación a la comunidad cuenta como gasto administrativo o como donativo a otra donataria autorizada.</li>
+</ul>
+</div>
+<div>
+<h3>Por qué tres escenarios</h3>
+<ul>
+<li><b>$8M (bajo), $9M (medio), $10M (alto):</b> cubren el rango de recaudación anual reportado en las notas del 28/Sep/2026.</li>
+<li><b>El % es fijo en los tres:</b> se usa el % capturado en “Política y comunidad”. Así la aportación sube cuando la recaudación sube y baja cuando baja.</li>
+<li><b>Primero la fundación:</b> en cada escenario se cubre antes la necesidad total (déficit de fideicomisos, gastos, reserva y capital F4). La aportación nunca supera el excedente.</li>
+<li><b>Piso:</b> el costo real de la infraestructura que usa la fundación. Si el excedente no lo cubre, aparece la alerta.</li>
+<li><b>Por qué 5–10%:</b> es el rango sugerido para el %. Queda dentro del rango de fiscal sponsorship y en el maaser como tope. La propuesta de $60–70K/mes equivale a ~7–10% sobre $8–10M.</li>
+</ul>
+</div>
+</div>
+</section>
+</main>
+<script>
+const D={"R_fiestas":9000000,"R_resto":0,"I_otros":0,
+"f1_int":1400000,"f1_req":2400000,
+"f2_int":0,"f2_req":0,"f2_rec":0,
+"f3_int":0,"f3_n":0,"f3_cuota":6000,"f3_med":0,
+"f4_int":0,"f4_req":0,"f4_cap":0,
+"g_emerg":0,"g_legal":0,"g_terap":0,"g_casa":0,"g_oper":0,
+"reserva_meses":3,"reserva_actual":0,"anios_reserva":3,"costo_infra":0,"pct":8,
+"com_recaud":0,"prest_saldo":5000000,"prop_mes":65000};
+const S=[
+["1. Ingresos anuales",[
+["R_fiestas","Recaudación fiestas mayores","Rosh Hashaná + Kipur"],
+["R_resto","Recaudación resto del año",""],
+["I_otros","Otros ingresos","Eventos, etc."]]],
+["2. F1 · Becas",[
+["f1_int","Intereses anuales","Solo usa intereses"],
+["f1_req","Requerido anual",""]]],
+["3. F2 · Universitario",[
+["f2_int","Intereses anuales",""],
+["f2_req","Préstamos nuevos del año","Sin intereses"],
+["f2_rec","Recuperación esperada","Cobros del año"]]],
+["4. F3 · Adultos mayores",[
+["f3_int","Intereses anuales","Solo usa intereses"],
+["f3_n","Número de beneficiarios",""],
+["f3_cuota","Cuota mensual promedio","Entre $4,000 y $8,000"],
+["f3_med","Medicinas (parte fundación)","1/3 del gasto anual"]]],
+["5. F4 · Nuevo",[
+["f4_int","Intereses anuales",""],
+["f4_req","Gasto requerido anual",""],
+["f4_cap","Aportación a capital este año","Para sembrar el fideicomiso"]]],
+["6. Otros gastos (promedio 3 años)",[
+["g_emerg","Emergencias médicas",""],
+["g_legal","Problemas legales",""],
+["g_terap","Terapias psiquiátricas y psicológicas",""],
+["g_casa","Casa de la tercera edad",""],
+["g_oper","Operación","Nómina y administración"]]],
+["7. Política y comunidad",[
+["reserva_meses","Reserva objetivo (meses)","Cuántos meses de gasto operativo debe tener la fundación guardados como colchón para operar si baja la recaudación. Sugerido: 3–6"],
+["reserva_actual","Reserva líquida actual",""],
+["anios_reserva","Años para completar la reserva","Sugerido: 2–3"],
+["costo_infra","Costo de la infraestructura usada","Renta, luz, teléfono, seguridad, personal · es el piso"],
+["pct","% a la comunidad sobre fiestas","Sugerido: 8%. Ajustable solo entre 5% y 10%"],
+["prop_mes","Propuesta actual mensual","$60–70K"],
+["com_recaud","Recaudación de la comunidad en fiestas","Contexto"],
+["prest_saldo","Saldo de préstamos a la comunidad","Contexto"]]]];
+const plain=new Set(["f3_n","reserva_meses","anios_reserva","pct"]);
+const V={...D};
+const fmt=n=>(n<0?"−":"")+"$"+Math.round(Math.abs(n)).toLocaleString("es-MX");
+const pc=n=>isFinite(n)?(n*100).toFixed(1)+"%":"—";
+function build(){let h="";S.forEach(([t,fs],i)=>{h+=`<details open><summary>${t}</summary><div class="body">`;
+fs.forEach(([k,l,s])=>{const inp=k==="pct"?`<div class="rng"><input type="range" min="5" max="10" step="0.5" id="pct" value="${V.pct}" aria-describedby="pct_v"><output id="pct_v">${V.pct}%</output></div>`:`<input inputmode="decimal" id="${k}" value="${show(k,V[k])}">`;h+=`<div class="f"><label for="${k}">${l}${s?`<small>${s}</small>`:""}</label>${inp}</div>`});h+="</div></details>"});
+document.getElementById("inputs").innerHTML=h;
+document.querySelectorAll("input").forEach(el=>{el.addEventListener("input",()=>{V[el.id]=parseFloat(el.value.replace(/[^\d.\-]/g,""))||0;calc()});
+el.addEventListener("blur",()=>{el.value=show(el.id,V[el.id])})});calc()}
+function show(k,v){return plain.has(k)?String(v):Math.round(v).toLocaleString("es-MX")}
+function model(v,rf){
+const R_f=rf??v.R_fiestas;
+const f1=Math.max(0,v.f1_req-v.f1_int);
+const f2=Math.max(0,v.f2_req-v.f2_int-v.f2_rec);
+const f3req=v.f3_n*v.f3_cuota*12+v.f3_med;const f3=Math.max(0,f3req-v.f3_int);
+const f4=Math.max(0,v.f4_req-v.f4_int);
+const defFid=f1+f2+f3+f4;
+const directo=v.g_emerg+v.g_legal+v.g_terap+v.g_casa+v.g_oper;
+const oper=defFid+directo;
+const res=Math.max(0,(oper/12*v.reserva_meses-v.reserva_actual)/Math.max(1,v.anios_reserva));
+const nec=oper+res+v.f4_cap;
+const rec=R_f+v.R_resto+v.I_otros;
+const exc=rec-nec;
+const prop=v.pct/100*R_f;
+const piso=v.costo_infra;
+const reco=Math.min(Math.max(prop,piso),Math.max(exc,0));
+return{f1,f2,f3,f3req,f4,defFid,directo,oper,res,nec,rec,exc,prop,piso,reco,R_f,alerta:piso>exc,pctEf:reco/R_f};}
+function calc(){
+V.pct=Math.min(10,Math.max(5,V.pct||8));const pv=document.getElementById("pct_v");if(pv)pv.textContent=V.pct.toLocaleString("es-MX")+"%";
+document.querySelectorAll("input").forEach(el=>el.classList.toggle("pend",V[el.id]===0));
+const m=model(V);
+const propAnual=V.prop_mes*12;
+const pend=[];S.forEach(([t,fs])=>fs.forEach(([k,l])=>{if(V[k]===0)pend.push(`${t.replace(/^\d\.\s/,"")}: ${l}`)}));
+const est=m.alerta?`<span class="pill bad">ALERTA</span>`:(m.exc<m.prop?`<span class="pill warn">Tope por excedente</span>`:`<span class="pill ok">Sostenible</span>`);
+const sc=[8e6,9e6,10e6].map(r=>{const x=model(V,r);return`<tr><td>${fmt(r)}</td><td>${fmt(x.exc)}</td><td>${fmt(x.reco)}</td><td>${pc(x.reco/r)}</td><td>${fmt(x.reco/12)}</td></tr>`}).join("");
+document.getElementById("out").innerHTML=`
+<div class="card"><h2>Aportación recomendada ${est}</h2>
+<div class="big">${fmt(m.reco)}<span style="font-size:.9rem;color:var(--mut)"> /año</span></div>
+<div class="row"><span>Mensual</span><b>${fmt(m.reco/12)}</b></div>
+<div class="row"><span>% efectivo sobre fiestas</span><b>${pc(m.pctEf)}</b></div>
+<div class="row"><span>Propuesta actual (${fmt(V.prop_mes)}/mes)</span><b class="${propAnual<=Math.max(m.exc,0)?"ok":"bad"}">${fmt(propAnual)} · ${propAnual<=Math.max(m.exc,0)?"cabe":"no cabe"}</b></div>
+${m.alerta?`<div class="alert">El costo de la infraestructura (${fmt(m.piso)}) supera el excedente (${fmt(m.exc)}). Hay que subir la recaudación o bajar el gasto.</div>`:""}
+</div>
+<div class="card"><h2>Necesidad de la fundación</h2>
+<div class="row"><span>Déficit F1 Becas</span><span>${fmt(m.f1)}</span></div>
+<div class="row"><span>Déficit F2 Universitario</span><span>${fmt(m.f2)}</span></div>
+<div class="row"><span>Déficit F3 Adultos mayores</span><span>${fmt(m.f3)}</span></div>
+<div class="row"><span>Déficit F4</span><span>${fmt(m.f4)}</span></div>
+<div class="row"><span>Otros gastos + operación</span><span>${fmt(m.directo)}</span></div>
+<div class="row"><span>Reserva (anualizada)</span><span>${fmt(m.res)}</span></div>
+<div class="row"><span>Capital F4</span><span>${fmt(V.f4_cap)}</span></div>
+<div class="row tot"><span>Necesidad total</span><span>${fmt(m.nec)}</span></div>
+<div class="row"><span>Recaudación total</span><span>${fmt(m.rec)}</span></div>
+<div class="row tot"><span>Excedente</span><span class="${m.exc>=0?"ok":"bad"}">${fmt(m.exc)}</span></div>
+</div>
+<div class="card"><h2>Escenarios de recaudación en fiestas</h2>
+<div class="tw"><table><tr><th>Fiestas</th><th>Excedente</th><th>Aportación</th><th>% s/fiestas</th><th>/mes</th></tr>${sc}</table></div>
+<p class="note">Escenarios bajo, medio y alto del rango reportado ($8–10M). Con el ${V.pct}% capturado fijo, la aportación crece junto con la recaudación; el % real baja solo si el tope por excedente o el piso lo limitan.</p></div>
+<div class="card"><h2>Datos pendientes (${pend.length})</h2>
+${pend.length?`<ul class="pend">${pend.map(p=>`<li>${p}</li>`).join("")}</ul>`:`<p class="ok">Completo</p>`}</div>
+<div class="card"><button id="exp">Copiar datos (JSON) para Claude</button>
+<p class="note" id="msg">Pega el JSON en el chat para recibir la recomendación final.</p></div>`;
+document.getElementById("exp").onclick=()=>{const t=JSON.stringify({datos:V,resultados:m},null,1);
+const ok=()=>document.getElementById("msg").textContent="Copiado ✓";
+try{navigator.clipboard.writeText(t).then(ok,()=>fallback(t))}catch(e){fallback(t)}};}
+function fallback(t){const a=document.createElement("textarea");a.value=t;document.body.appendChild(a);a.select();try{document.execCommand("copy");document.getElementById("msg").textContent="Copiado ✓"}catch(e){document.getElementById("msg").textContent="Copia manual:";}a.remove()}
+build();
+(function(){const r=document.documentElement,b=document.getElementById("theme");
+const cur=()=>r.dataset.theme||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");
+const lab=()=>{b.textContent=cur()==="dark"?"Modo claro":"Modo oscuro"};
+r.dataset.theme="light";
+lab();b.onclick=()=>{const n=cur()==="dark"?"light":"dark";r.dataset.theme=n;lab()};
+matchMedia("(prefers-color-scheme: dark)").addEventListener?.("change",lab)})();
+</script>
+
+</body>
+</html>
