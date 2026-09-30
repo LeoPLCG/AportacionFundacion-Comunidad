@@ -115,8 +115,7 @@ const D={"R_fiestas":9000000,"R_resto":0,"I_otros":0,
 "f4_int":0,"f4_req":0,"f4_cap":0,
 "g_salud":2081590,"g_oper":2048144,
 ...Object.fromEntries(IT.map(([k])=>[k,0])),
-"reserva_meses":3,"reserva_actual":0,"anios_reserva":3,"pct":8,
-"com_recaud":0,"prest_saldo":5000000,"prop_mes":65000};
+"reserva_meses":3,"reserva_actual":0,"anios_reserva":3,"pct":8};
 const S=[
 ["1. Ingresos anuales",[
 ["R_fiestas","Recaudación fiestas mayores","Rosh Hashaná + Kipur"],
@@ -148,10 +147,7 @@ const S=[
 ["reserva_meses","Reserva objetivo (meses)","Cuántos meses de gasto operativo debe tener la fundación guardados como colchón para operar si baja la recaudación. Sugerido: 3–6"],
 ["reserva_actual","Reserva líquida actual",""],
 ["anios_reserva","Años para completar la reserva","Sugerido: 2–3"],
-["pct","% a la comunidad sobre fiestas","Sugerido: 8%. Ajustable solo entre 5% y 10%"],
-["prop_mes","Propuesta actual mensual","$60–70K"],
-["com_recaud","Recaudación de la comunidad en fiestas","Contexto"],
-["prest_saldo","Saldo de préstamos a la comunidad","Contexto"]]]];
+["pct","% a la comunidad sobre fiestas","Sugerido: 8%. Ajustable solo entre 5% y 10%. Define la aportación mensual"]]]];
 const plain=new Set(["f1_n","f2_n","f3_n","reserva_meses","anios_reserva","pct"]);
 const V={...D};
 const fmt=n=>(n<0?"−":"")+"$"+Math.round(Math.abs(n)).toLocaleString("es-MX");
@@ -183,7 +179,6 @@ function calc(){
 V.pct=Math.min(10,Math.max(5,V.pct||8));const pv=document.getElementById("pct_v");if(pv)pv.textContent=V.pct.toLocaleString("es-MX")+"%";
 document.querySelectorAll("input").forEach(el=>el.classList.toggle("pend",V[el.id]===0));
 const m=model(V);
-const propAnual=V.prop_mes*12;
 V.costo_infra=m.piso;
 const cob=m.piso>0?m.prop/m.piso:0;
 const infraPill=m.piso===0?`<span class="pill warn">Captura los costos</span>`:cob>=1.5?`<span class="pill ok">Cubre con holgura</span>`:cob>=1?`<span class="pill warn">Cubre justo</span>`:`<span class="pill bad">No cubre</span>`;
@@ -194,7 +189,7 @@ document.getElementById("out").innerHTML=`
 <div class="big">${fmt(m.reco)}<span style="font-size:.9rem;color:var(--mut)"> /año</span></div>
 <div class="row"><span>Mensual</span><b>${fmt(m.reco/12)}</b></div>
 <div class="row"><span>% efectivo sobre fiestas</span><b>${pc(m.pctEf)}</b></div>
-<div class="row"><span>Propuesta actual (${fmt(V.prop_mes)}/mes)</span><b class="${propAnual<=Math.max(m.exc,0)?"ok":"bad"}">${fmt(propAnual)} · ${propAnual<=Math.max(m.exc,0)?"cabe":"no cabe"}</b></div>
+
 ${m.alerta?`<div class="alert">El costo de la infraestructura (${fmt(m.piso)}) supera el excedente (${fmt(m.exc)}). Hay que subir la recaudación o bajar el gasto.</div>`:""}
 </div>
 <div class="card"><h2>Infraestructura vs aportación del ${V.pct.toLocaleString("es-MX")}% ${infraPill}</h2>
@@ -210,7 +205,9 @@ ${IT.map(([k,l])=>`<tr><td>${l}</td><td>${fmt(V[k])}</td><td>${fmt(V[k]*12)}</td
 <div class="row"><span>Déficit F2 Universitario</span><span>${fmt(m.f2)}</span></div>${m.f2sur>0?`<div class="row"><span class="note" style="margin:0">F2 genera un sobrante de ${fmt(m.f2sur)} que se queda en su fideicomiso</span></div>`:""}
 <div class="row"><span>Déficit F3 Adultos mayores</span><span>${fmt(m.f3)}</span></div>
 <div class="row"><span>Déficit F4</span><span>${fmt(m.f4)}</span></div>
-<div class="row"><span>Salud + gasto operativo</span><span>${fmt(m.directo)}</span></div>
+<div class="row"><span>Salud y medicinas</span><span>${fmt(V.g_salud)}</span></div>
+<div class="row"><span>Gasto operativo</span><span>${fmt(V.g_oper)}</span></div>
+<div class="row tot"><span>Necesidad operativa</span><span>${fmt(m.oper)}</span></div>
 <div class="row"><span>Reserva (anualizada)</span><span>${fmt(m.res)}</span></div>
 <div class="row"><span>Capital F4</span><span>${fmt(V.f4_cap)}</span></div>
 <div class="row tot"><span>Necesidad total</span><span>${fmt(m.nec)}</span></div>
