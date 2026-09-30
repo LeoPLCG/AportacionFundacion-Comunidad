@@ -62,6 +62,7 @@ button:hover{filter:brightness(1.08)}
 @media(min-width:760px){.refs-grid{grid-template-columns:1fr 1fr}}
 .refs ul{margin:0;padding-left:18px;display:grid;gap:8px;font-size:.9rem;max-width:65ch}
 .refs b{color:var(--ink)}
+tr.trt td{font-weight:700;border-top:2px solid var(--line)}
 .gloss{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--acc2);border-radius:8px;padding:10px 12px;margin:0 0 12px;font-size:.9rem;max-width:65ch}
 .rng{display:flex;align-items:center;gap:8px}
 .rng input[type=range]{flex:1;min-width:0;padding:0;border:0;background:transparent;accent-color:var(--acc)}
@@ -98,7 +99,7 @@ button:hover{filter:brightness(1.08)}
 <li><b>$8M (bajo), $9M (medio), $10M (alto):</b> cubren el rango de recaudación anual reportado en las notas del 28/Sep/2026.</li>
 <li><b>El % es fijo en los tres:</b> se usa el % capturado en “Política y comunidad”. Así la aportación sube cuando la recaudación sube y baja cuando baja.</li>
 <li><b>Primero la fundación:</b> en cada escenario se cubre antes la necesidad total (déficit de fideicomisos, gastos, reserva y capital F4). La aportación nunca supera el excedente.</li>
-<li><b>Piso:</b> el costo real de la infraestructura que usa la fundación. Si el excedente no lo cubre, aparece la alerta.</li>
+<li><b>Piso:</b> la suma mensual de renta, derecho de piso, luz, mantenimiento, teléfono y seguridad, multiplicada por 12. El % elegido debe cubrirla con holgura (1.5 veces o más). Si el excedente no alcanza a cubrirla, aparece la alerta.</li>
 <li><b>Por qué 5–10%:</b> es el rango sugerido para el %. Queda dentro del rango de fiscal sponsorship y en el maaser como tope. La propuesta de $60–70K/mes equivale a ~7–10% sobre $8–10M.</li>
 </ul>
 </div>
@@ -112,7 +113,8 @@ const D={"R_fiestas":9000000,"R_resto":0,"I_otros":0,
 "f3_int":0,"f3_n":0,"f3_cuota":6000,"f3_med":0,
 "f4_int":0,"f4_req":0,"f4_cap":0,
 "g_emerg":0,"g_legal":0,"g_terap":0,"g_casa":0,"g_oper":0,
-"reserva_meses":3,"reserva_actual":0,"anios_reserva":3,"costo_infra":0,"pct":8,
+"i_renta":0,"i_piso":0,"i_luz":0,"i_mant":0,"i_tel":0,"i_seg":0,
+"reserva_meses":3,"reserva_actual":0,"anios_reserva":3,"pct":8,
 "com_recaud":0,"prest_saldo":5000000,"prop_mes":65000};
 const S=[
 ["1. Ingresos anuales",[
@@ -141,11 +143,17 @@ const S=[
 ["g_terap","Terapias psiquiátricas y psicológicas",""],
 ["g_casa","Casa de la tercera edad",""],
 ["g_oper","Operación","Nómina y administración"]]],
-["7. Política y comunidad",[
+["7. Pago a la comunidad por infraestructura (mensual)",[
+["i_renta","Renta","Uso de espacio / templo"],
+["i_piso","Derecho de piso",""],
+["i_luz","Luz",""],
+["i_mant","Mantenimiento",""],
+["i_tel","Teléfono",""],
+["i_seg","Seguridad",""]]],
+["8. Política y comunidad",[
 ["reserva_meses","Reserva objetivo (meses)","Cuántos meses de gasto operativo debe tener la fundación guardados como colchón para operar si baja la recaudación. Sugerido: 3–6"],
 ["reserva_actual","Reserva líquida actual",""],
 ["anios_reserva","Años para completar la reserva","Sugerido: 2–3"],
-["costo_infra","Costo de la infraestructura usada","Renta, luz, teléfono, seguridad, personal · es el piso"],
 ["pct","% a la comunidad sobre fiestas","Sugerido: 8%. Ajustable solo entre 5% y 10%"],
 ["prop_mes","Propuesta actual mensual","$60–70K"],
 ["com_recaud","Recaudación de la comunidad en fiestas","Contexto"],
@@ -174,15 +182,18 @@ const nec=oper+res+v.f4_cap;
 const rec=R_f+v.R_resto+v.I_otros;
 const exc=rec-nec;
 const prop=v.pct/100*R_f;
-const piso=v.costo_infra;
+const infraMes=v.i_renta+v.i_piso+v.i_luz+v.i_mant+v.i_tel+v.i_seg;const piso=infraMes*12;
 const reco=Math.min(Math.max(prop,piso),Math.max(exc,0));
-return{f1,f2,f3,f3req,f4,defFid,directo,oper,res,nec,rec,exc,prop,piso,reco,R_f,alerta:piso>exc,pctEf:reco/R_f};}
+return{infraMes,f1,f2,f3,f3req,f4,defFid,directo,oper,res,nec,rec,exc,prop,piso,reco,R_f,alerta:piso>exc,pctEf:reco/R_f};}
 function calc(){
 V.pct=Math.min(10,Math.max(5,V.pct||8));const pv=document.getElementById("pct_v");if(pv)pv.textContent=V.pct.toLocaleString("es-MX")+"%";
 document.querySelectorAll("input").forEach(el=>el.classList.toggle("pend",V[el.id]===0));
 const m=model(V);
 const propAnual=V.prop_mes*12;
-const pend=[];S.forEach(([t,fs])=>fs.forEach(([k,l])=>{if(V[k]===0)pend.push(`${t.replace(/^\d\.\s/,"")}: ${l}`)}));
+const IT=[["i_renta","Renta"],["i_piso","Derecho de piso"],["i_luz","Luz"],["i_mant","Mantenimiento"],["i_tel","Teléfono"],["i_seg","Seguridad"]];
+V.costo_infra=m.piso;
+const cob=m.piso>0?m.prop/m.piso:0;
+const infraPill=m.piso===0?`<span class="pill warn">Captura los costos</span>`:cob>=1.5?`<span class="pill ok">Cubre con holgura</span>`:cob>=1?`<span class="pill warn">Cubre justo</span>`:`<span class="pill bad">No cubre</span>`;
 const est=m.alerta?`<span class="pill bad">ALERTA</span>`:(m.exc<m.prop?`<span class="pill warn">Tope por excedente</span>`:`<span class="pill ok">Sostenible</span>`);
 const sc=[8e6,9e6,10e6].map(r=>{const x=model(V,r);return`<tr><td>${fmt(r)}</td><td>${fmt(x.exc)}</td><td>${fmt(x.reco)}</td><td>${pc(x.reco/r)}</td><td>${fmt(x.reco/12)}</td></tr>`}).join("");
 document.getElementById("out").innerHTML=`
@@ -193,6 +204,14 @@ document.getElementById("out").innerHTML=`
 <div class="row"><span>Propuesta actual (${fmt(V.prop_mes)}/mes)</span><b class="${propAnual<=Math.max(m.exc,0)?"ok":"bad"}">${fmt(propAnual)} · ${propAnual<=Math.max(m.exc,0)?"cabe":"no cabe"}</b></div>
 ${m.alerta?`<div class="alert">El costo de la infraestructura (${fmt(m.piso)}) supera el excedente (${fmt(m.exc)}). Hay que subir la recaudación o bajar el gasto.</div>`:""}
 </div>
+<div class="card"><h2>Infraestructura vs aportación del ${V.pct.toLocaleString("es-MX")}% ${infraPill}</h2>
+<div class="tw"><table><tr><th>Concepto</th><th>Mensual</th><th>Anual</th></tr>
+${IT.map(([k,l])=>`<tr><td>${l}</td><td>${fmt(V[k])}</td><td>${fmt(V[k]*12)}</td></tr>`).join("")}
+<tr class="trt"><td>Costo de infraestructura</td><td>${fmt(m.infraMes)}</td><td>${fmt(m.piso)}</td></tr>
+<tr><td>Aportación al ${V.pct.toLocaleString("es-MX")}% s/fiestas</td><td>${fmt(m.prop/12)}</td><td>${fmt(m.prop)}</td></tr>
+<tr class="trt"><td>Diferencia</td><td class="${m.prop>=m.piso?"ok":"bad"}">${fmt((m.prop-m.piso)/12)}</td><td class="${m.prop>=m.piso?"ok":"bad"}">${fmt(m.prop-m.piso)}</td></tr></table></div>
+<div class="row"><span>Cobertura</span><b>${m.piso>0?(m.prop/m.piso).toLocaleString("es-MX",{minimumFractionDigits:1,maximumFractionDigits:1})+" veces el costo":"—"}</b></div>
+<p class="note">El costo anualizado es el piso de la aportación. La meta es que el ${V.pct.toLocaleString("es-MX")}% lo cubra con holgura (1.5 veces o más).</p></div>
 <div class="card"><h2>Necesidad de la fundación</h2>
 <div class="row"><span>Déficit F1 Becas</span><span>${fmt(m.f1)}</span></div>
 <div class="row"><span>Déficit F2 Universitario</span><span>${fmt(m.f2)}</span></div>
@@ -207,9 +226,8 @@ ${m.alerta?`<div class="alert">El costo de la infraestructura (${fmt(m.piso)}) s
 </div>
 <div class="card"><h2>Escenarios de recaudación en fiestas</h2>
 <div class="tw"><table><tr><th>Fiestas</th><th>Excedente</th><th>Aportación</th><th>% s/fiestas</th><th>/mes</th></tr>${sc}</table></div>
-<p class="note">Escenarios bajo, medio y alto del rango reportado ($8–10M). Con el ${V.pct}% capturado fijo, la aportación crece junto con la recaudación; el % real baja solo si el tope por excedente o el piso lo limitan.</p></div>
-<div class="card"><h2>Datos pendientes (${pend.length})</h2>
-${pend.length?`<ul class="pend">${pend.map(p=>`<li>${p}</li>`).join("")}</ul>`:`<p class="ok">Completo</p>`}</div>
+<p class="note">Escenarios bajo, medio y alto del rango reportado ($8–10M). Con el ${V.pct}% capturado fijo, la aportación crece junto con la recaudación; el % real cambia solo si el piso (costo de infraestructura) lo sube o el tope por excedente lo baja.</p></div>
+
 <div class="card"><button id="exp">Copiar datos (JSON) para Claude</button>
 <p class="note" id="msg">Pega el JSON en el chat para recibir la recomendación final.</p></div>`;
 document.getElementById("exp").onclick=()=>{const t=JSON.stringify({datos:V,resultados:m},null,1);
