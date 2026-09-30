@@ -99,7 +99,7 @@ tr.trt td{font-weight:700;border-top:2px solid var(--line)}
 <li><b>$8M (bajo), $9M (medio), $10M (alto):</b> cubren el rango de recaudación anual reportado en las notas del 28/Sep/2026.</li>
 <li><b>El % es fijo en los tres:</b> se usa el % capturado en “Política y comunidad”. Así la aportación sube cuando la recaudación sube y baja cuando baja.</li>
 <li><b>Primero la fundación:</b> en cada escenario se cubre antes la necesidad total (déficit de fideicomisos, gastos, reserva y capital F4). La aportación nunca supera el excedente.</li>
-<li><b>Piso:</b> la suma mensual de renta, derecho de piso, luz, mantenimiento, teléfono y seguridad, multiplicada por 12. El % elegido debe cubrirla con holgura (1.5 veces o más). Si el excedente no alcanza a cubrirla, aparece la alerta.</li>
+<li><b>Piso:</b> la suma mensual de lo que la comunidad paga por la fundación (espacio, luz, teléfono, papel, diseñadora, publicaciones, mensajería, mantenimiento y predial de Gabriel Mancera, sistema de cómputo), multiplicada por 12. El % elegido debe cubrirla con holgura (1.5 veces o más). Si el excedente no alcanza a cubrirla, aparece la alerta.</li>
 <li><b>Por qué 5–10%:</b> es el rango sugerido para el %. Queda dentro del rango de fiscal sponsorship y en el maaser como tope. La propuesta de $60–70K/mes equivale a ~7–10% sobre $8–10M.</li>
 </ul>
 </div>
@@ -107,13 +107,14 @@ tr.trt td{font-weight:700;border-top:2px solid var(--line)}
 </section>
 </main>
 <script>
+const IT=[["c_espacio","Espacio"],["c_luz","Luz"],["c_tel","Teléfono"],["c_papel","Papel para impresión"],["c_disen","Diseñadora"],["c_publi","Publicaciones WhatsApp y correos electrónicos"],["c_mens","Mensajería"],["c_mant","Mantenimiento Gabriel Mancera (mano de obra)"],["c_pred","Predial Gabriel Mancera"],["c_comp","Sistema de cómputo"]];
 const D={"R_fiestas":9000000,"R_resto":0,"I_otros":0,
-"f1_int":1400000,"f1_req":2400000,
-"f2_int":0,"f2_req":0,"f2_rec":0,
-"f3_int":0,"f3_n":0,"f3_cuota":6000,"f3_med":0,
+"f1_int":1503826,"f1_req":3549591,"f1_n":27,
+"f2_int":2903532,"f2_req":1939186,"f2_rec":926592,"f2_n":15,
+"f3_int":2659000,"f3_req":4104274,"f3_n":66,
 "f4_int":0,"f4_req":0,"f4_cap":0,
-"g_emerg":0,"g_legal":0,"g_terap":0,"g_casa":0,"g_oper":0,
-"i_renta":0,"i_piso":0,"i_luz":0,"i_mant":0,"i_tel":0,"i_seg":0,
+"g_salud":2081590,"g_oper":2048144,
+...Object.fromEntries(IT.map(([k])=>[k,0])),
 "reserva_meses":3,"reserva_actual":0,"anios_reserva":3,"pct":8,
 "com_recaud":0,"prest_saldo":5000000,"prop_mes":65000};
 const S=[
@@ -123,34 +124,27 @@ const S=[
 ["I_otros","Otros ingresos","Eventos, etc."]]],
 ["2. F1 · Becas",[
 ["f1_int","Intereses anuales","Solo usa intereses"],
-["f1_req","Requerido anual",""]]],
-["3. F2 · Universitario",[
+["f1_req","Becas otorgadas (anual)",""],
+["f1_n","Niños becados","Informativo"]]],
+["3. F2 · Financiamiento universitario",[
 ["f2_int","Intereses anuales",""],
-["f2_req","Préstamos nuevos del año","Sin intereses"],
-["f2_rec","Recuperación esperada","Cobros del año"]]],
+["f2_req","Préstamos del año","Sin intereses"],
+["f2_rec","Recuperación","Cobros del año"],
+["f2_n","Universitarios apoyados","Informativo"]]],
 ["4. F3 · Adultos mayores",[
 ["f3_int","Intereses anuales","Solo usa intereses"],
-["f3_n","Número de beneficiarios",""],
-["f3_cuota","Cuota mensual promedio","Entre $4,000 y $8,000"],
-["f3_med","Medicinas (parte fundación)","1/3 del gasto anual"]]],
+["f3_req","Ayudas totales (anual)","Sin medicinas: se registran en Salud"],
+["f3_n","Adultos mayores apoyados","Informativo"]]],
 ["5. F4 · Nuevo",[
 ["f4_int","Intereses anuales",""],
 ["f4_req","Gasto requerido anual",""],
 ["f4_cap","Aportación a capital este año","Para sembrar el fideicomiso"]]],
-["6. Otros gastos (promedio 3 años)",[
-["g_emerg","Emergencias médicas",""],
-["g_legal","Problemas legales",""],
-["g_terap","Terapias psiquiátricas y psicológicas",""],
-["g_casa","Casa de la tercera edad",""],
-["g_oper","Operación","Nómina y administración"]]],
-["7. Pago a la comunidad por infraestructura (mensual)",[
-["i_renta","Renta","Uso de espacio / templo"],
-["i_piso","Derecho de piso",""],
-["i_luz","Luz",""],
-["i_mant","Mantenimiento",""],
-["i_tel","Teléfono",""],
-["i_seg","Seguridad",""]]],
-["8. Política y comunidad",[
+["6. Salud y medicinas",[
+["g_salud","Ayudas totales de salud (anual)","CADIs: Mayan Hajayim, Eishel, hospitales (Centro Médico Los Encinos, MAC, Casa Azul, Cruz Roja), medicinas, OSE e IMSS"]]],
+["7. Gasto operativo",[
+["g_oper","Gasto operativo (anual)","Sueldos, comisiones bancarias, cuota legal (JAP), gastos varios e ISR de bancos"]]],
+["8. Pago a la comunidad por infraestructura (mensual)",IT.map(([k,l])=>[k,l,""])],
+["9. Política y comunidad",[
 ["reserva_meses","Reserva objetivo (meses)","Cuántos meses de gasto operativo debe tener la fundación guardados como colchón para operar si baja la recaudación. Sugerido: 3–6"],
 ["reserva_actual","Reserva líquida actual",""],
 ["anios_reserva","Años para completar la reserva","Sugerido: 2–3"],
@@ -158,7 +152,7 @@ const S=[
 ["prop_mes","Propuesta actual mensual","$60–70K"],
 ["com_recaud","Recaudación de la comunidad en fiestas","Contexto"],
 ["prest_saldo","Saldo de préstamos a la comunidad","Contexto"]]]];
-const plain=new Set(["f3_n","reserva_meses","anios_reserva","pct"]);
+const plain=new Set(["f1_n","f2_n","f3_n","reserva_meses","anios_reserva","pct"]);
 const V={...D};
 const fmt=n=>(n<0?"−":"")+"$"+Math.round(Math.abs(n)).toLocaleString("es-MX");
 const pc=n=>isFinite(n)?(n*100).toFixed(1)+"%":"—";
@@ -171,26 +165,25 @@ function show(k,v){return plain.has(k)?String(v):Math.round(v).toLocaleString("e
 function model(v,rf){
 const R_f=rf??v.R_fiestas;
 const f1=Math.max(0,v.f1_req-v.f1_int);
-const f2=Math.max(0,v.f2_req-v.f2_int-v.f2_rec);
-const f3req=v.f3_n*v.f3_cuota*12+v.f3_med;const f3=Math.max(0,f3req-v.f3_int);
+const f2=Math.max(0,v.f2_req-v.f2_int-v.f2_rec);const f2sur=Math.max(0,v.f2_int+v.f2_rec-v.f2_req);
+const f3req=v.f3_req;const f3=Math.max(0,f3req-v.f3_int);
 const f4=Math.max(0,v.f4_req-v.f4_int);
 const defFid=f1+f2+f3+f4;
-const directo=v.g_emerg+v.g_legal+v.g_terap+v.g_casa+v.g_oper;
+const directo=v.g_salud+v.g_oper;
 const oper=defFid+directo;
 const res=Math.max(0,(oper/12*v.reserva_meses-v.reserva_actual)/Math.max(1,v.anios_reserva));
 const nec=oper+res+v.f4_cap;
 const rec=R_f+v.R_resto+v.I_otros;
 const exc=rec-nec;
 const prop=v.pct/100*R_f;
-const infraMes=v.i_renta+v.i_piso+v.i_luz+v.i_mant+v.i_tel+v.i_seg;const piso=infraMes*12;
+const infraMes=IT.reduce((a,[k])=>a+(v[k]||0),0);const piso=infraMes*12;
 const reco=Math.min(Math.max(prop,piso),Math.max(exc,0));
-return{infraMes,f1,f2,f3,f3req,f4,defFid,directo,oper,res,nec,rec,exc,prop,piso,reco,R_f,alerta:piso>exc,pctEf:reco/R_f};}
+return{infraMes,f2sur,f1,f2,f3,f3req,f4,defFid,directo,oper,res,nec,rec,exc,prop,piso,reco,R_f,alerta:piso>exc,pctEf:reco/R_f};}
 function calc(){
 V.pct=Math.min(10,Math.max(5,V.pct||8));const pv=document.getElementById("pct_v");if(pv)pv.textContent=V.pct.toLocaleString("es-MX")+"%";
 document.querySelectorAll("input").forEach(el=>el.classList.toggle("pend",V[el.id]===0));
 const m=model(V);
 const propAnual=V.prop_mes*12;
-const IT=[["i_renta","Renta"],["i_piso","Derecho de piso"],["i_luz","Luz"],["i_mant","Mantenimiento"],["i_tel","Teléfono"],["i_seg","Seguridad"]];
 V.costo_infra=m.piso;
 const cob=m.piso>0?m.prop/m.piso:0;
 const infraPill=m.piso===0?`<span class="pill warn">Captura los costos</span>`:cob>=1.5?`<span class="pill ok">Cubre con holgura</span>`:cob>=1?`<span class="pill warn">Cubre justo</span>`:`<span class="pill bad">No cubre</span>`;
@@ -214,10 +207,10 @@ ${IT.map(([k,l])=>`<tr><td>${l}</td><td>${fmt(V[k])}</td><td>${fmt(V[k]*12)}</td
 <p class="note">El costo anualizado es el piso de la aportación. La meta es que el ${V.pct.toLocaleString("es-MX")}% lo cubra con holgura (1.5 veces o más).</p></div>
 <div class="card"><h2>Necesidad de la fundación</h2>
 <div class="row"><span>Déficit F1 Becas</span><span>${fmt(m.f1)}</span></div>
-<div class="row"><span>Déficit F2 Universitario</span><span>${fmt(m.f2)}</span></div>
+<div class="row"><span>Déficit F2 Universitario</span><span>${fmt(m.f2)}</span></div>${m.f2sur>0?`<div class="row"><span class="note" style="margin:0">F2 genera un sobrante de ${fmt(m.f2sur)} que se queda en su fideicomiso</span></div>`:""}
 <div class="row"><span>Déficit F3 Adultos mayores</span><span>${fmt(m.f3)}</span></div>
 <div class="row"><span>Déficit F4</span><span>${fmt(m.f4)}</span></div>
-<div class="row"><span>Otros gastos + operación</span><span>${fmt(m.directo)}</span></div>
+<div class="row"><span>Salud + gasto operativo</span><span>${fmt(m.directo)}</span></div>
 <div class="row"><span>Reserva (anualizada)</span><span>${fmt(m.res)}</span></div>
 <div class="row"><span>Capital F4</span><span>${fmt(V.f4_cap)}</span></div>
 <div class="row tot"><span>Necesidad total</span><span>${fmt(m.nec)}</span></div>
